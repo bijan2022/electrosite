@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TechTrade Global - About Us</title>
+  <style>
+    body { 
+      font-family: Arial; 
+      margin: 0; 
+      background: #f5f5f5; 
+      line-height: 1.6;
+    }
+    
+    header, footer { 
+      background: #2c3e50; 
+      color: white; 
+      text-align: center; 
+      padding: 1.5rem; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    nav { 
+      background: #34495e; 
+      padding: 1rem; 
+      text-align: center; 
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    nav a { 
+      color: white; 
+      margin: 0 1rem; 
+      text-decoration: none; 
+      font-weight: bold; 
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+    
+    nav a:hover {
+      background: #2c3e50;
+      transform: translateY(-2px);
+    }
+    
+    nav a.active { 
+      background: #2c3e50; 
+      padding: 0.5rem 1rem; 
+      border-radius: 5px; 
+    }
+    
+    .about-container { 
+      max-width: 800px; 
+      margin: 2rem auto; 
+      background: white; 
+      padding: 2.5rem; 
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+    
+    .timeline-item, .stats-grid, .values-grid, .testimonial-grid {
+      display: grid;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      text-align: center;
+    }
+
+    .stat-item, .value-item {
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-item:hover, .value-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .testimonial-grid blockquote {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-left: 5px solid #2c3e50;
+      margin: 0;
+      border-radius: 0 8px 8px 0;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial-grid blockquote:hover {
+      transform: translateX(5px);
+    }
+
+    .values-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    h2, h3, h4 {
+      color: #2c3e50;
+    }
+
+    .stat-item h4 {
+      font-size: 2rem;
+      color: #34495e;
+      margin: 0;
+    }
+
+    .timeline-item p {
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-item p:hover {
+      transform: translateX(5px);
+      background: #e9ecef;
+    }
+
+    cite {
+      display: block;
+      margin-top: 1rem;
+      font-style: italic;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TechTrade Global</h1>
+    <p>International Electronics Trading Platform</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Inventory</a>
+    <a href="add.html">Add Product</a>
+    <a href="payment.html">Make Payment</a>
+    <a href="about.html" class="active">About Us</a>
+    <a href="catalog.html">Catalog</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="shipping.html">Shipping & Returns</a>
+  </nav>
+
+  <main>
+    <section class="about-container">
+      <h2>About TechTrade Global</h2>
+      <p>TechTrade Global is a leading international electronics trading platform, established with the vision of connecting electronics manufacturers, suppliers, and buyers worldwide.</p>
+      
+      <h3>Our Mission</h3>
+      <p>To facilitate seamless global trade in electronics by providing a secure, efficient, and user-friendly platform for businesses of all sizes.</p>
+      
+      <section class="timeline">
+        <h3>Our Journey</h3>
+        <div class="timeline-item">
+          <p><strong>2020:</strong> Founded in Digital City</p>
+          <p><strong>2021:</strong> Expanded to 10 international markets</p>
+          <p><strong>2022:</strong> Launched secure payment platform</p>
+          <p><strong>2023:</strong> Reached 10,000+ verified suppliers</p>
+          <p><strong>2024:</strong> Introduced real-time inventory tracking</p>
+        </div>
+      </section>
+
+      <section class="stats">
+        <h3>TechTrade Global by Numbers</h3>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <h4>50+</h4>
+            <p>Countries Served</p>
+          </div>
+          <div class="stat-item">
+            <h4>10,000+</h4>
+            <p>Verified Suppliers</p>
+          </div>
+          <div class="stat-item">
+            <h4>1M+</h4>
+            <p>Successful Transactions</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="values">
+        <h3>Our Core Values</h3>
+        <div class="values-grid">
+          <div class="value-item">
+            <h4>Integrity</h4>
+            <p>We maintain the highest standards of business ethics and transparency in all our operations.</p>
+          </div>
+          <div class="value-item">
+            <h4>Innovation</h4>
+            <p>We continuously evolve our technology and services to meet the changing needs of global trade.</p>
+          </div>
+          <div class="value-item">
+            <h4>Excellence</h4>
+            <p>We strive for excellence in every aspect of our service delivery and customer support.</p>
+          </div>
+          <div class="value-item">
+            <h4>Partnership</h4>
+            <p>We build lasting relationships with our clients and partners based on trust and mutual growth.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonials">
+        <h3>What Our Partners Say</h3>
+        <div class="testimonial-grid">
+          <blockquote>
+            <p>"TechTrade Global has transformed our supply chain operations. Their platform is intuitive and their support is outstanding."</p>
+            <cite>- John Doe, CEO of Tech Solutions Inc.</cite>
+          </blockquote>
+          <blockquote>
+            <p>"The most reliable trading platform we've worked with. Their verification process ensures we only deal with legitimate suppliers."</p>
+            <cite>- Jane Smith, Procurement Director at Global Electronics</cite>
+          </blockquote>
+        </div>
+      </section>
+
+      <h3>What We Do</h3>
+      <p>We specialize in:</p>
+      <p>- Managing international electronics imports and exports<br>
+         - Providing real-time inventory tracking<br>
+         - Facilitating secure payment processing<br>
+         - Connecting buyers with verified suppliers</p>
+      
+      <h3>Contact Us</h3>
+      <p>Email: contact@techtradeglobal.com<br>
+         Phone: +1 (555) 123-4567<br>
+         Address: 123 Tech Street, Digital City, TC 12345</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 TechTrade Global</p>
+  </footer>
+</body>
+</html>

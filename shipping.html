@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>TechTrade Global - Shipping & Returns</title>
+  <meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; 
+               script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' https: data:;
+               connect-src 'self';
+               form-action 'self';">
+  <style>
+    :root {
+      --primary-bg: #f5f5f5;
+      --secondary-bg: #ffffff;
+      --header-bg: #2c3e50;
+      --nav-bg: #34495e;
+      --text-color: #333333;
+      --text-light: #ffffff;
+      --border-color: #dddddd;
+      --hover-color: #3498db;
+      --button-primary: #3498db;
+      --timeline-color: #3498db;
+      --note-bg: #fff3cd;
+      --note-border: #ffeeba;
+      --note-text: #856404;
+      --table-stripe: #f8f9fa;
+      --method-bg: #f8f9fa;
+    }
+
+    [data-theme="dark"] {
+      --primary-bg: #1a1a1a;
+      --secondary-bg: #2d2d2d;
+      --header-bg: #1a1a1a;
+      --nav-bg: #2d2d2d;
+      --text-color: #ffffff;
+      --text-light: #ffffff;
+      --border-color: #404040;
+      --hover-color: #3498db;
+      --button-primary: #2980b9;
+      --timeline-color: #3498db;
+      --note-bg: #2c3e50;
+      --note-border: #34495e;
+      --note-text: #ecf0f1;
+      --table-stripe: #2c3e50;
+      --method-bg: #2c3e50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body { 
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: var(--primary-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    header { 
+      background: var(--header-bg);
+      color: var(--text-light);
+      padding: 1rem;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--text-light);
+      color: var(--text-light);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .language-select {
+      background: var(--nav-bg);
+      color: var(--text-light);
+      border: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    nav { 
+      background: var(--nav-bg);
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    nav a { 
+      color: var(--text-light);
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    
+    nav a.active { 
+      background: var(--header-bg);
+    }
+
+    .content-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .info-section {
+      background: var(--secondary-bg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .info-section h2 {
+      color: var(--text-color);
+      border-bottom: 2px solid var(--timeline-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-section h3 {
+      color: var(--text-color);
+      margin-top: 1.5rem;
+    }
+
+    .shipping-methods {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .shipping-method {
+      background: var(--method-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .shipping-method h4 {
+      color: var(--text-color);
+      margin-top: 0;
+    }
+
+    .timeline {
+      margin: 2rem 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline li:before {
+      content: "•";
+      color: var(--timeline-color);
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: -0.5rem;
+    }
+
+    .important-note {
+      background: var(--note-bg);
+      border: 1px solid var(--note-border);
+      color: var(--note-text);
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    th, td {
+      padding: 1rem;
+      border: 1px solid var(--border-color);
+      text-align: left;
+    }
+
+    th {
+      background: var(--nav-bg);
+      color: var(--text-light);
+    }
+
+    tr:nth-child(even) {
+      background: var(--table-stripe);
+    }
+
+    .contact-support {
+      background: var(--method-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .contact-button {
+      display: inline-block;
+      background: var(--button-primary);
+      color: var(--text-light);
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .contact-button:hover {
+      background: var(--hover-color);
+    }
+
+    footer {
+      background: var(--header-bg);
+      color: var(--text-light);
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .header-controls {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .shipping-methods {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="branding">
+        <h1 data-translate="title">TechTrade Global</h1>
+        <p data-translate="subtitle">International Electronics Trading Platform</p>
+      </div>
+      <div class="header-controls">
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <select class="language-select" onchange="changeLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html" data-translate="nav-inventory">Inventory</a>
+    <a href="add.html" data-translate="nav-add">Add Product</a>
+    <a href="payment.html" data-translate="nav-payment">Make Payment</a>
+    <a href="about.html" data-translate="nav-about">About Us</a>
+    <a href="catalog.html" data-translate="nav-catalog">Catalog</a>
+    <a href="contact.html" data-translate="nav-contact">Contact Us</a>
+    <a href="shipping.html" class="active" data-translate="nav-shipping">Shipping & Returns</a>
+  </nav>
+
+  <main class="content-container">
+    <section class="info-section">
+      <h2 data-translate="shipping-info">Shipping Information</h2>
+      
+      <div class="shipping-methods">
+        <div class="shipping-method">
+          <h4 data-translate="standard-shipping">Standard Shipping</h4>
+          <p data-translate="standard-time">5-7 business days</p>
+          <p data-translate="standard-free">Free for orders over $500</p>
+          <p data-translate="standard-cost">$25 for orders under $500</p>
+        </div>
+
+        <div class="shipping-method">
+          <h4 data-translate="express-shipping">Express Shipping</h4>
+          <p data-translate="express-time">2-3 business days</p>
+          <p data-translate="express-cost">$50 flat rate</p>
+          <p data-translate="express-availability">Available for most locations</p>
+        </div>
+
+        <div class="shipping-method">
+          <h4 data-translate="international-shipping">International Shipping</h4>
+          <p data-translate="international-time">7-14 business days</p>
+          <p data-translate="international-cost">Rates calculated at checkout</p>
+          <p data-translate="international-customs">Customs fees may apply</p>
+        </div>
+      </div>
+
+      <h3 data-translate="shipping-process">Shipping Process</h3>
+      <ul class="timeline">
+        <li data-translate="process-1">Order confirmation within 24 hours</li>
+        <li data-translate="process-2">Quality check and packaging (1-2 days)</li>
+        <li data-translate="process-3">Dispatch notification with tracking details</li>
+        <li data-translate="process-4">Regular tracking updates via email</li>
+        <li data-translate="process-5">Delivery confirmation</li>
+      </ul>
+
+      <div class="important-note">
+        <strong data-translate="important">Important:</strong>
+        <span data-translate="important-note">Due to the nature of electronic components, some items may require special handling and additional processing time.</span>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <h2 data-translate="returns-policy">Returns & Refund Policy</h2>
+
+      <h3 data-translate="return-eligibility">Return Eligibility</h3>
+      <p data-translate="return-conditions">We accept returns within 30 days of delivery for most items under these conditions:</p>
+      <ul>
+        <li data-translate="condition-1">Item must be unused and in original packaging</li>
+        <li data-translate="condition-2">All accessories and documentation must be included</li>
+        <li data-translate="condition-3">Return shipping costs are the responsibility of the buyer</li>
+        <li data-translate="condition-4">Custom orders are non-returnable</li>
+      </ul>
+
+      <h3 data-translate="refund-process">Refund Process</h3>
+      <table>
+        <thead>
+          <tr>
+            <th data-translate="table-step">Step</th>
+            <th data-translate="table-timeline">Timeline</th>
+            <th data-translate="table-details">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-translate="step-1">Return Request</td>
+            <td data-translate="timeline-1">Within 30 days</td>
+            <td data-translate="details-1">Submit return request through your account</td>
+          </tr>
+          <tr>
+            <td data-translate="step-2">Processing</td>
+            <td data-translate="timeline-2">1-2 business days</td>
+            <td data-translate="details-2">Return authorization and shipping instructions</td>
+          </tr>
+          <tr>
+            <td data-translate="step-3">Inspection</td>
+            <td data-translate="timeline-3">2-3 business days</td>
+            <td data-translate="details-3">Quality check upon receipt</td>
+          </tr>
+          <tr>
+            <td data-translate="step-4">Refund</td>
+            <td data-translate="timeline-4">3-5 business days</td>
+            <td data-translate="details-4">Processed to original payment method</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 data-translate="warranty-info">Warranty Information</h3>
+      <p data-translate="warranty-details">All products come with a standard 1-year manufacturer warranty covering defects in materials and workmanship. Extended warranty options are available for select products.</p>
+
+      <div class="important-note">
+        <strong data-translate="note">Note:</strong>
+        <span data-translate="damage-note">Damaged items must be reported within 48 hours of delivery with photographic evidence for claim processing.</span>
+      </div>
+
+      <div class="contact-support">
+        <h3 data-translate="need-help">Need Help?</h3>
+        <p data-translate="support-available">Our support team is available 24/7 to assist you with any shipping or return related queries.</p>
+        <a href="contact.html" class="contact-button" data-translate="contact-support">Contact Support</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-translate="copyright">© 2024 TechTrade Global</p>
+  </footer>
+
+  <script>
+    const translations = {
+      en: {
+        "title": "TechTrade Global",
+        "subtitle": "International Electronics Trading Platform",
+        "nav-inventory": "Inventory",
+        "nav-add": "Add Product",
+        "nav-payment": "Make Payment",
+        "nav-about": "About Us",
+        "nav-catalog": "Catalog",
+        "nav-contact": "Contact Us",
+        "nav-shipping": "Shipping & Returns",
+        "shipping-info": "Shipping Information",
+        "standard-shipping": "Standard Shipping",
+        "standard-time": "5-7 business days",
+        "standard-free": "Free for orders over $500",
+        "standard-cost": "$25 for orders under $500",
+        "express-shipping": "Express Shipping",
+        "express-time": "2-3 business days",
+        "express-cost": "$50 flat rate",
+        "express-availability": "Available for most locations",
+        "international-shipping": "International Shipping",
+        "international-time": "7-14 business days",
+        "international-cost": "Rates calculated at checkout",
+        "international-customs": "Customs fees may apply",
+        "shipping-process": "Shipping Process",
+        "process-1": "Order confirmation within 24 hours",
+        "process-2": "Quality check and packaging (1-2 days)",
+        "process-3": "Dispatch notification with tracking details",
+        "process-4": "Regular tracking updates via email",
+        "process-5": "Delivery confirmation",
+        "important": "Important:",
+        "important-note": "Due to the nature of electronic components, some items may require special handling and additional processing time.",
+        "returns-policy": "Returns & Refund Policy",
+        "return-eligibility": "Return Eligibility",
+        "return-conditions": "We accept returns within 30 days of delivery for most items under these conditions:",
+        "condition-1": "Item must be unused and in original packaging",
+        "condition-2": "All accessories and documentation must be included",
+        "condition-3": "Return shipping costs are the responsibility of the buyer",
+        "condition-4": "Custom orders are non-returnable",
+        "refund-process": "Refund Process",
+        "table-step": "Step",
+        "table-timeline": "Timeline",
+        "table-details": "Details",
+        "step-1": "Return Request",
+        "timeline-1": "Within 30 days",
+        "details-1": "Submit return request through your account",
+        "step-2": "Processing",
+        "timeline-2": "1-2 business days",
+        "details-2": "Return authorization and shipping instructions",
+        "step-3": "Inspection",
+        "timeline-3": "2-3 business days",
+        "details-3": "Quality check upon receipt",
+        "step-4": "Refund",
+        "timeline-4": "3-5 business days",
+        "details-4": "Processed to original payment method",
+        "warranty-info": "Warranty Information",
+        "warranty-details": "All products come with a standard 1-year manufacturer warranty covering defects in materials and workmanship. Extended warranty options are available for select products.",
+        "note": "Note:",
+        "damage-note": "Damaged items must be reported within 48 hours of delivery with photographic evidence for claim processing.",
+        "need-help": "Need Help?",
+        "support-available": "Our support team is available 24/7 to assist you with any shipping or return related queries.",
+        "contact-support": "Contact Support",
+        "copyright": "© 2024 TechTrade Global"
+      },
+      es: {
+        "title": "TechTrade Global",
+        "subtitle": "Plataforma Internacional de Comercio Electrónico",
+        "nav-inventory": "Inventario",
+        "nav-add": "Añadir Producto",
+        "nav-payment": "Realizar Pago",
+        "nav-about": "Sobre Nosotros",
+        "nav-catalog": "Catálogo",
+        "nav-contact": "Contáctenos",
+        "nav-shipping": "Envíos y Devoluciones",
+        "shipping-info": "Información de Envío",
+        "standard-shipping": "Envío Estándar",
+        "standard-time": "5-7 días hábiles",
+        "standard-free": "Gratis para pedidos superiores a $500",
+        "standard-cost": "$25 para pedidos inferiores a $500",
+        "express-shipping": "Envío Express",
+        "express-time": "2-3 días hábiles",
+        "express-cost": "Tarifa fija de $50",
+        "express-availability": "Disponible para la mayoría de ubicaciones",
+        "international-shipping": "Envío Internacional",
+        "international-time": "7-14 días hábiles",
+        "international-cost": "Tarifas calculadas al finalizar la compra",
+        "international-customs": "Pueden aplicar tasas aduaneras",
+        "shipping-process": "Proceso de Envío",
+        "process-1": "Confirmación del pedido en 24 horas",
+        "process-2": "Control de calidad y embalaje (1-2 días)",
+        "process-3": "Notificación de envío con detalles de seguimiento",
+        "process-4": "Actualizaciones regulares de seguimiento por email",
+        "process-5": "Confirmación de entrega",
+        "important": "Importante:",
+        "important-note": "Debido a la naturaleza de los componentes electrónicos, algunos artículos pueden requerir manipulación especial y tiempo adicional de procesamiento.",
+        "returns-policy": "Política de Devoluciones y Reembolsos",
+        "return-eligibility": "Elegibilidad para Devoluciones",
+        "return-conditions": "Aceptamos devoluciones dentro de los 30 días posteriores a la entrega para la mayoría de los artículos bajo estas condiciones:",
+        "condition-1": "El artículo debe estar sin usar y en su embalaje original",
+        "condition-2": "Todos los accesorios y documentación deben estar incluidos",
+        "condition-3": "Los costos de envío de devolución son responsabilidad del comprador",
+        "condition-4": "Los pedidos personalizados no son retornables",
+        "refund-process": "Proceso de Reembolso",
+        "table-step": "Paso",
+        "table-timeline": "Plazo",
+        "table-details": "Detalles",
+        "step-1": "Solicitud de Devolución",
+        "timeline-1": "Dentro de 30 días",
+        "details-1": "Enviar solicitud de devolución a través de su cuenta",
+        "step-2": "Procesamiento",
+        "timeline-2": "1-2 días hábiles",
+        "details-2": "Autorización de devolución e instrucciones de envío",
+        "step-3": "Inspección",
+        "timeline-3": "2-3 días hábiles",
+        "details-3": "Control de calidad al recibir",
+        "step-4": "Reembolso",
+        "timeline-4": "3-5 días hábiles",
+        "details-4": "Procesado al método de pago original",
+        "warranty-info": "Información de Garantía",
+        "warranty-details": "Todos los productos vienen con una garantía estándar del fabricante de 1 año que cubre defectos en materiales y mano de obra. Opciones de garantía extendida están disponibles para productos seleccionados.",
+        "note": "Nota:",
+        "damage-note": "Los artículos dañados deben ser reportados dentro de las 48 horas posteriores a la entrega con evidencia fotográfica para el procesamiento del reclamo.",
+        "need-help": "¿Necesita Ayuda?",
+        "support-available": "Nuestro equipo de soporte está disponible 24/7 para ayudarlo con cualquier consulta relacionada con envíos o devoluciones.",
+        "contact-support": "Contactar Soporte",
+        "copyright": "© 2024 TechTrade Global"
+      }
+    };
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      html.setAttribute('data-theme', newTheme);
+      themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    function changeLanguage(lang) {
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang][key]) {
+          if (element.tagName === 'INPUT') {
+            element.placeholder = translations[lang][key];
+          } else {
+            element.textContent = translations[lang][key];
+          }
+        }
+      });
+      localStorage.setItem('language', lang);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeIcon').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+
+      const savedLanguage = localStorage.getItem('language') || 'en';
+      document.querySelector('.language-select').value = savedLanguage;
+      changeLanguage(savedLanguage);
+    });
+  </script>
+</body>
+</html>

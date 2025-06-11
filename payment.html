@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TechTrade Global - Payment</title>
+  <meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; 
+               script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' https: data:;
+               connect-src 'self';
+               form-action 'self';">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">  
+  <style>
+    body { 
+      font-family: Arial; 
+      margin: 0; 
+      background: #f5f5f5; 
+    }
+    
+    header, footer { 
+      background: #2c3e50; 
+      color: white; 
+      text-align: center; 
+      padding: 1rem; 
+    }
+    
+    nav { 
+      background: #34495e; 
+      padding: 1rem; 
+      text-align: center; 
+    }
+    
+    nav a { 
+      color: white; 
+      margin: 0 1rem; 
+      text-decoration: none; 
+      font-weight: bold; 
+    }
+    
+    nav a.active { 
+      background: #2c3e50; 
+      padding: 0.5rem 1rem; 
+      border-radius: 5px; 
+    }
+
+    .form-container { 
+      max-width: 800px; 
+      margin: 2rem auto; 
+      background: white; 
+      padding: 2rem; 
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .order-summary {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .order-items {
+      margin-bottom: 1.5rem;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      padding-top: 1rem;
+      margin-top: 0.5rem;
+      border-top: 2px solid #dee2e6;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .payment-method {
+      flex: 1;
+      padding: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .payment-method:hover {
+      border-color: #3498db;
+    }
+
+    .payment-method.active {
+      border-color: #3498db;
+      background: #ebf5ff;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    button {
+      background: #27ae60;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1.1rem;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #219150;
+    }
+
+    button:disabled {
+      background: #95a5a6;
+      cursor: not-allowed;
+    }
+
+    .success-message {
+      display: none;
+      background: #27ae60;
+      color: white;
+      padding: 1rem;
+      border-radius: 5px;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .test-card-info {
+      background: #f1f9fe;
+      padding: 1rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .no-items-message {
+      text-align: center;
+      padding: 2rem;
+      color: #7f8c8d;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TechTrade Global</h1>
+    <p>International Electronics Trading Platform</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Inventory</a>
+    <a href="add.html">Add Product</a>
+    <a href="payment.html" class="active">Make Payment</a>
+    <a href="about.html">About Us</a>
+    <a href="catalog.html">Catalog</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="shipping.html">Shipping & Returns</a>
+  </nav>
+
+  <main>
+    <section class="form-container">
+      <h2>Complete Your Payment</h2>
+
+      <div class="test-card-info">
+        <strong>Test Card:</strong> 4111 1111 1111 1111 (Use this number to simulate a successful payment)
+      </div>
+
+      <div id="orderContent">
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          <div id="orderItems" class="order-items"></div>
+          <div id="orderSummary"></div>
+        </div>
+      </div>
+
+      <div class="payment-methods">
+        <div class="payment-method active" data-method="card">
+          <div>Credit Card</div>
+        </div>
+        <div class="payment-method" data-method="paypal">
+          <div>PayPal</div>
+        </div>
+        <div class="payment-method" data-method="bank">
+          <div>Bank Transfer</div>
+        </div>
+      </div>
+
+      <form id="paymentForm">
+        <div class="form-group">
+          <label for="cardName">Cardholder Name:</label>
+          <input type="text" id="cardName" required>
+          <div class="error-message" id="cardNameError">Please enter the cardholder name</div>
+        </div>
+
+        <div class="form-group">
+          <label for="cardNumber">Card Number:</label>
+          <input type="text" id="cardNumber" maxlength="19" required>
+          <div class="error-message" id="cardNumberError">Please enter a valid card number</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="expiry">Expiry Date:</label>
+            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+            <div class="error-message" id="expiryError">Please enter a valid expiry date</div>
+          </div>
+
+          <div class="form-group">
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" maxlength="4" required>
+            <div class="error-message" id="cvvError">Please enter a valid CVV</div>
+          </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+          Payment processed successfully! Redirecting to order confirmation...
+        </div>
+
+        <div class="loading" id="loadingIndicator">
+          Processing payment...
+        </div>
+
+        <button type="submit" id="submitButton">Pay $<span id="paymentAmount">0.00</span></button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 TechTrade Global</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if user is logged in
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Get checkout data
+      const checkoutData = JSON.parse(localStorage.getItem('checkoutData'));
+      const orderContent = document.getElementById('orderContent');
+
+      if (!checkoutData || !checkoutData.items || checkoutData.items.length === 0) {
+        orderContent.innerHTML = `
+          <div class="no-items-message">
+            <h3>No Items in Cart</h3>
+            <p>Your shopping cart is empty. Add some items to proceed with payment.</p>
+          </div>
+        `;
+        document.getElementById('paymentAmount').textContent = '0.00';
+      } else {
+        // Display order items
+        const orderItems = document.getElementById('orderItems');
+        const orderSummary = document.getElementById('orderSummary');
+        
+        let itemsHTML = '';
+        checkoutData.items.forEach(item => {
+          itemsHTML += `
+            <div class="order-item">
+              <span>${item.name} x ${item.quantity}</span>
+              <span>$${(item.price * item.quantity).toLocaleString()}</span>
+            </div>
+          `;
+        });
+        
+        orderItems.innerHTML = itemsHTML;
+
+        // Display totals
+        orderSummary.innerHTML = `
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>$${checkoutData.totals.subtotal.toLocaleString()}</span>
+          </div>
+          <div class="summary-row">
+            <span>Tax (10%):</span>
+            <span>$${checkoutData.totals.tax.toLocaleString()}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping:</span>
+            <span>${checkoutData.totals.shipping === 0 ? 'Free' : '$' + checkoutData.totals.shipping.toLocaleString()}</span>
+          </div>
+          <div class="summary-row">
+            <span>Total:</span>
+            <span>$${checkoutData.totals.total.toLocaleString()}</span>
+          </div>
+        `;
+
+        document.getElementById('paymentAmount').textContent = checkoutData.totals.total.toLocaleString();
+      }
+
+      // Payment method selection
+      const paymentMethods = document.querySelectorAll('.payment-method');
+      paymentMethods.forEach(method => {
+        method.addEventListener('click', function() {
+          paymentMethods.forEach(m => m.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Card number formatting
+      const cardNumber = document.getElementById('cardNumber');
+      cardNumber.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        value = value.replace(/(.{4})/g, '$1 ').trim();
+        e.target.value = value;
+      });
+
+      // Expiry date formatting
+      const expiry = document.getElementById('expiry');
+      expiry.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+          value = value.slice(0,2) + '/' + value.slice(2);
+        }
+        e.target.value = value;
+      });
+
+      // Form submission
+      const paymentForm = document.getElementById('paymentForm');
+      paymentForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) return;
+
+        const submitButton = document.getElementById('submitButton');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const successMessage = document.getElementById('successMessage');
+
+        // Check for test card number
+        const testCardNumber = '4111111111111111';
+        const enteredCardNumber = cardNumber.value.replace(/\s/g, '');
+        
+        if (enteredCardNumber !== testCardNumber) {
+          alert('For testing, please use the test card number shown above.');
+          return;
+        }
+
+        // Simulate payment processing
+        submitButton.disabled = true;
+        loadingIndicator.style.display = 'block';
+
+        try {
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
+          
+          // Clear cart and checkout data
+          localStorage.removeItem('cart');
+          localStorage.removeItem('checkoutData');
+          
+          loadingIndicator.style.display = 'none';
+          successMessage.style.display = 'block';
+          
+          // Redirect after success
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2000);
+        } catch (error) {
+          alert('Payment failed. Please try again.');
+          submitButton.disabled = false;
+          loadingIndicator.style.display = 'none';
+        }
+      });
+
+      function validateForm() {
+        let isValid = true;
+        
+        // Card name validation
+        const cardName = document.getElementById('cardName');
+        if (cardName.value.trim().length < 3) {
+          showError('cardNameError');
+          isValid = false;
+        }
+
+        // Card number validation
+        if (cardNumber.value.replace(/\s/g, '').length !== 16) {
+          showError('cardNumberError');
+          isValid = false;
+        }
+
+        // Expiry validation
+        const expiryValue = expiry.value;
+        if (!expiryValue.match(/^(0[1-9]|1[0-2])\/([0-9]{2})$/)) {
+          showError('expiryError');
+          isValid = false;
+        }
+
+        // CVV validation
+        const cvv = document.getElementById('cvv');
+        if (!cvv.value.match(/^[0-9]{3,4}$/)) {
+          showError('cvvError');
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      function showError(elementId) {
+        const error = document.getElementById(elementId);
+        error.style.display = 'block';
+        setTimeout(() => {
+          error.style.display = 'none';
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechTrade Global - Contact Us</title>
+  <meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; 
+               script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' https: data:;
+               connect-src 'self';
+               form-action 'self';">
+  <style>
+    :root {
+      --primary-bg: #f5f5f5;
+      --secondary-bg: #ffffff;
+      --header-bg: #2c3e50;
+      --nav-bg: #34495e;
+      --text-color: #333333;
+      --text-light: #ffffff;
+      --border-color: #dddddd;
+      --hover-color: #3498db;
+      --button-primary: #3498db;
+      --button-success: #2ecc71;
+      --form-bg: #ffffff;
+    }
+
+    [data-theme="dark"] {
+      --primary-bg: #1a1a1a;
+      --secondary-bg: #2d2d2d;
+      --header-bg: #1a1a1a;
+      --nav-bg: #2d2d2d;
+      --text-color: #ffffff;
+      --text-light: #ffffff;
+      --border-color: #404040;
+      --hover-color: #3498db;
+      --button-primary: #2980b9;
+      --button-success: #27ae60;
+      --form-bg: #2d2d2d;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--primary-bg);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--header-bg);
+      color: var(--text-light);
+      padding: 1rem;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--text-light);
+      color: var(--text-light);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .language-select {
+      background: var(--nav-bg);
+      color: var(--text-light);
+      border: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    nav {
+      background: var(--nav-bg);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    nav a.active {
+      background: var(--header-bg);
+    }
+
+    .contact-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .contact-form {
+      background: var(--form-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .contact-info {
+      background: var(--form-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 1rem;
+      background: var(--secondary-bg);
+      color: var(--text-color);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    button {
+      background: var(--button-primary);
+      color: var(--text-light);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: var(--hover-color);
+    }
+
+    .office-location {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .office-location:last-child {
+      border-bottom: none;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      color: var(--button-primary);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--button-primary);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: var(--button-primary);
+      color: var(--text-light);
+    }
+
+    .success-message {
+      display: none;
+      background: var(--button-success);
+      color: var(--text-light);
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .support-hours {
+      background: var(--secondary-bg);
+      padding: 1rem;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+
+    footer {
+      background: var(--header-bg);
+      color: var(--text-light);
+      padding: 2rem;
+      margin-top: auto;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .header-controls {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="branding">
+        <h1 data-translate="title">TechTrade Global</h1>
+        <p data-translate="subtitle">International Electronics Trading Platform</p>
+      </div>
+      <div class="header-controls">
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <select class="language-select" onchange="changeLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-content">
+      <a href="index.html" data-translate="nav-inventory">Inventory</a>
+      <a href="add.html" data-translate="nav-add">Add Product</a>
+      <a href="payment.html" data-translate="nav-payment">Make Payment</a>
+      <a href="about.html" data-translate="nav-about">About Us</a>
+      <a href="catalog.html" data-translate="nav-catalog">Catalog</a>
+      <a href="contact.html" class="active" data-translate="nav-contact">Contact Us</a>
+      <a href="shipping.html" data-translate="nav-shipping">Shipping & Returns</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="contact-container">
+      <div class="contact-form">
+        <h2 data-translate="contact-title">Get in Touch</h2>
+        <div id="successMessage" class="success-message" data-translate="success-message">
+          Thank you for your message. We'll respond within 24 hours!
+        </div>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name" data-translate="form-name">Full Name:</label>
+            <input type="text" id="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email" data-translate="form-email">Email Address:</label>
+            <input type="email" id="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="department" data-translate="form-department">Department:</label>
+            <select id="department" required>
+              <option value="" data-translate="form-select-dept">Select Department</option>
+              <option value="sales" data-translate="form-sales">Sales</option>
+              <option value="support" data-translate="form-support">Technical Support</option>
+              <option value="billing" data-translate="form-billing">Billing</option>
+              <option value="partnership" data-translate="form-partnership">Business Partnership</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject" data-translate="form-subject">Subject:</label>
+            <input type="text" id="subject" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message" data-translate="form-message">Message:</label>
+            <textarea id="message" required></textarea>
+          </div>
+          
+          <button type="submit" data-translate="form-submit">Send Message</button>
+        </form>
+      </div>
+
+      <div class="contact-info">
+        <h2 data-translate="offices-title">Our Offices</h2>
+        
+        <div class="office-location">
+          <h3 data-translate="hq-title">Global Headquarters</h3>
+          <p>123 Tech Street<br>
+             Digital City, TC 12345<br>
+             United States</p>
+          <p>Phone: +1 (555) 123-4567<br>
+             Email: hq@techtradeglobal.com</p>
+        </div>
+
+        <div class="office-location">
+          <h3 data-translate="eu-title">European Office</h3>
+          <p>45 Innovation Avenue<br>
+             Tech Park, London<br>
+             United Kingdom</p>
+          <p>Phone: +44 20 7123 4567<br>
+             Email: eu@techtradeglobal.com</p>
+        </div>
+
+        <div class="office-location">
+          <h3 data-translate="apac-title">Asia Pacific Office</h3>
+          <p>789 Digital Boulevard<br>
+             Cyber District, Singapore<br>
+             Singapore</p>
+          <p>Phone: +65 6789 0123<br>
+             Email: apac@techtradeglobal.com</p>
+        </div>
+
+        <div class="support-hours">
+          <h3 data-translate="support-hours-title">Support Hours</h3>
+          <p data-translate="support-hours-content">
+            Monday - Friday: 24/7<br>
+            Saturday: 9:00 AM - 6:00 PM (Local Time)<br>
+            Sunday: 10:00 AM - 4:00 PM (Local Time)
+          </p>
+        </div>
+
+        <div class="social-links">
+          <a href="#" onclick="alert('Connect with us on LinkedIn')" data-translate="social-linkedin">LinkedIn</a>
+          <a href="#" onclick="alert('Follow us on Twitter')" data-translate="social-twitter">Twitter</a>
+          <a href="#" onclick="alert('Join our Facebook community')" data-translate="social-facebook">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2024 TechTrade Global</p>
+  </footer>
+
+  <script>
+    // Language translations
+    const translations = {
+      en: {
+        "title": "TechTrade Global",
+        "subtitle": "International Electronics Trading Platform",
+        "contact-title": "Get in Touch",
+        "success-message": "Thank you for your message. We'll respond within 24 hours!",
+        "form-name": "Full Name:",
+        "form-email": "Email Address:",
+        "form-department": "Department:",
+        "form-select-dept": "Select Department",
+        "form-sales": "Sales",
+        "form-support": "Technical Support",
+        "form-billing": "Billing",
+        "form-partnership": "Business Partnership",
+        "form-subject": "Subject:",
+        "form-message": "Message:",
+        "form-submit": "Send Message",
+        "offices-title": "Our Offices",
+        "hq-title": "Global Headquarters",
+        "eu-title": "European Office",
+        "apac-title": "Asia Pacific Office",
+        "support-hours-title": "Support Hours",
+        "social-linkedin": "LinkedIn",
+        "social-twitter": "Twitter",
+        "social-facebook": "Facebook"
+      },
+      es: {
+        "title": "TechTrade Global",
+        "subtitle": "Plataforma Internacional de Comercio Electrónico",
+        "contact-title": "Contáctenos",
+        "success-message": "Gracias por su mensaje. ¡Responderemos dentro de 24 horas!",
+        "form-name": "Nombre Completo:",
+        "form-email": "Correo Electrónico:",
+        "form-department": "Departamento:",
+        "form-select-dept": "Seleccionar Departamento",
+        "form-sales": "Ventas",
+        "form-support": "Soporte Técnico",
+        "form-billing": "Facturación",
+        "form-partnership": "Asociación Comercial",
+        "form-subject": "Asunto:",
+        "form-message": "Mensaje:",
+        "form-submit": "Enviar Mensaje",
+        "offices-title": "Nuestras Oficinas",
+        "hq-title": "Sede Global",
+        "eu-title": "Oficina Europea",
+        "apac-title": "Oficina Asia Pacífico",
+        "support-hours-title": "Horario de Atención",
+        "social-linkedin": "LinkedIn",
+        "social-twitter": "Twitter",
+        "social-facebook": "Facebook"
+      }
+    };
+
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      html.setAttribute('data-theme', newTheme);
+      themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Language change
+    function changeLanguage(lang) {
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang][key]) {
+          if (element.tagName === 'INPUT') {
+            element.placeholder = translations[lang][key];
+          } else {
+            element.textContent = translations[lang][key];
+          }
+        }
+      });
+      localStorage.setItem('language', lang);
+    }
+
+    // Form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const successMessage = document.getElementById('successMessage');
+      successMessage.style.display = 'block';
+      
+      this.reset();
+      
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 5000);
+    });
+
+    // Initialize theme and language
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeIcon').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+
+      const savedLanguage = localStorage.getItem('language') || 'en';
+      document.querySelector('.language-select').value = savedLanguage;
+      changeLanguage(savedLanguage);
+    });
+  </script>
+</body>
+</html>

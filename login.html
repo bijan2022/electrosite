@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TechTrade Global - Login</title>
+  <meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; 
+               script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' https: data:;
+               connect-src 'self';
+               form-action 'self';">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+  <style>
+    body { font-family: Arial; margin: 0; background: #f5f5f5; }
+    header, footer { background: #2c3e50; color: white; text-align: center; padding: 1rem; }
+    .login-container { 
+      max-width: 400px; 
+      margin: 2rem auto; 
+      background: white; 
+      padding: 2rem; 
+      border-radius: 10px; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    }
+    .form-group { margin-bottom: 1rem; }
+    label { 
+      display: block; 
+      margin-bottom: 0.5rem; 
+      font-weight: bold; 
+      color: #2c3e50; 
+    }
+    input { 
+      width: 100%; 
+      padding: 0.75rem; 
+      margin-bottom: 1rem; 
+      border: 1px solid #ddd; 
+      border-radius: 4px; 
+      font-size: 1rem; 
+      box-sizing: border-box;
+    }
+    button { 
+      width: 100%; 
+      padding: 0.75rem; 
+      background: #3498db; 
+      color: white; 
+      border: none; 
+      border-radius: 4px; 
+      cursor: pointer; 
+      font-size: 1rem; 
+      font-weight: bold; 
+    }
+    button:hover { background: #2980b9; }
+    .signup-link { 
+      text-align: center; 
+      margin-top: 1.5rem; 
+      color: #7f8c8d; 
+    }
+    .signup-link a { 
+      color: #3498db; 
+      text-decoration: none; 
+      font-weight: bold; 
+    }
+    .signup-link a:hover { color: #2980b9; }
+    .error-message { 
+      color: #e74c3c; 
+      background: #fde8e7; 
+      padding: 0.75rem; 
+      border-radius: 4px; 
+      margin-bottom: 1rem; 
+      display: none; 
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TechTrade Global</h1>
+    <p>International Electronics Trading Platform</p>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <h2 style="color: #2c3e50; margin-bottom: 1.5rem; text-align: center;">Login</h2>
+      <div id="errorMessage" class="error-message"></div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" required placeholder="Enter your password">
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <div class="signup-link">
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2024 TechTrade Global</p>
+  </footer>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+      
+      // Check for hardcoded credentials first
+      if (email === 'bijanbroumandfar@gmail.com' && password === 'bijan') {
+        const defaultUser = {
+          email: 'bijanbroumandfar@gmail.com',
+          password: 'bijan',
+          name: 'Bijan'
+        };
+        localStorage.setItem('currentUser', JSON.stringify(defaultUser));
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // If not the hardcoded credentials, check localStorage
+      try {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if (user) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          window.location.href = 'index.html';
+        } else {
+          errorMessage.style.display = 'block';
+          errorMessage.textContent = 'Invalid email or password';
+        }
+      } catch (error) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Login error. Please try again.';
+        console.error('Login error:', error);
+      }
+    });
+  </script>
+</body>
+</html>

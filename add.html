@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechTrade Global - Add Product</title>
+  <meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; 
+               script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' https: data:;
+               connect-src 'self';
+               form-action 'self';">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">  
+  <style>
+    :root {
+      --primary-bg: #f5f5f5;
+      --secondary-bg: #ffffff;
+      --header-bg: #2c3e50;
+      --nav-bg: #34495e;
+      --text-color: #333333;
+      --text-light: #ffffff;
+      --border-color: #dddddd;
+      --hover-color: #3498db;
+      --button-primary: #3498db;
+      --button-danger: #e74c3c;
+      --button-success: #2ecc71;
+    }
+
+    [data-theme="dark"] {
+      --primary-bg: #1a1a1a;
+      --secondary-bg: #2d2d2d;
+      --header-bg: #1a1a1a;
+      --nav-bg: #2d2d2d;
+      --text-color: #ffffff;
+      --text-light: #ffffff;
+      --border-color: #404040;
+      --hover-color: #3498db;
+      --button-primary: #2980b9;
+      --button-danger: #c0392b;
+      --button-success: #27ae60;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body { 
+      font-family: Arial, sans-serif;
+      background: var(--primary-bg);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header { 
+      background: var(--header-bg);
+      color: var(--text-light);
+      padding: 1rem;
+      position: relative;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--text-light);
+      color: var(--text-light);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .language-select {
+      background: var(--nav-bg);
+      color: var(--text-light);
+      border: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    nav { 
+      background: var(--nav-bg);
+      padding: 1rem;
+      overflow-x: auto;
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a { 
+      color: var(--text-light);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    nav a.active { 
+      background: var(--header-bg);
+    }
+
+    main {
+      flex: 1;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      width: 100%;
+    }
+
+    .form-container {
+      background: var(--secondary-bg);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background: var(--secondary-bg);
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--button-primary);
+    }
+
+    select:disabled {
+      background-color: var(--primary-bg);
+      cursor: not-allowed;
+    }
+
+    .price-display {
+      background: var(--primary-bg);
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      font-weight: bold;
+      color: var(--text-color);
+    }
+
+    button[type="submit"] {
+      background: var(--button-success);
+      color: var(--text-light);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background: var(--button-primary);
+    }
+
+    .success-message {
+      background: var(--button-success);
+      color: var(--text-light);
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    footer {
+      background: var(--header-bg);
+      color: var(--text-light);
+      padding: 2rem;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section a {
+      color: var(--text-light);
+      text-decoration: none;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    #miniCart {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--secondary-bg);
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: none;
+    }
+
+    .mini-cart-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--button-primary);
+      color: var(--text-light);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    #cartCount {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--button-danger);
+      color: var(--text-light);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 1rem;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .header-controls {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="branding">
+        <h1>TechTrade Global</h1>
+        <p data-translate="subtitle">International Electronics Trading Platform</p>
+      </div>
+      <div class="header-controls">
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <select class="language-select" onchange="changeLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+        <div class="user-info">
+          <span id="userName"></span>
+          <button class="logout-btn" onclick="logout()" data-translate="logout">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-content">
+      <a href="index.html" data-translate="nav-inventory">Inventory</a>
+      <a href="add.html" class="active" data-translate="nav-add">Add Product</a>
+      <a href="payment.html" data-translate="nav-payment">Make Payment</a>
+      <a href="about.html" data-translate="nav-about">About Us</a>
+      <a href="catalog.html" data-translate="nav-catalog">Catalog</a>
+      <a href="contact.html" data-translate="nav-contact">Contact Us</a>
+      <a href="shipping.html" data-translate="nav-shipping">Shipping & Returns</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="form-container">
+      <h2 data-translate="add-product">Add New Product</h2>
+      <form id="productForm">
+        <div class="form-group">
+          <label for="productCategory" data-translate="product-category">Product Category:</label>
+          <select id="productCategory" required>
+            <option value="">Select Category</option>
+            <option value="smartphones">Smartphones and Tablets</option>
+            <option value="computers">Laptops and Computers</option>
+            <option value="advertisement">Advertisement Equipment</option>
+            <option value="accessories">Accessories</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="productName" data-translate="product-name">Product:</label>
+          <select id="productName" required disabled>
+            <option value="">Select Product</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="productType" data-translate="transaction-type">Transaction Type:</label>
+          <select id="productType" required>
+            <option value="import">Import</option>
+            <option value="export">Export</option>
+          </select>
+        </div>
+        <div class="price-display">
+          <span data-translate="price-range">Price Range:</span> 
+          <span id="priceRange">Select a product to see price range</span>
+        </div>
+        <div class="form-group">
+          <label for="price" data-translate="price">Price (USD):</label>
+          <input type="number" id="price" required readonly>
+        </div>
+        <div class="form-group">
+          <label for="quantity" data-translate="quantity">Quantity:</label>
+          <input type="number" id="quantity" required min="1">
+        </div>
+        <button type="submit" data-translate="add-to-inventory">Add to Inventory</button>
+      </form>
+    </section>
+  </main>
+
+  <div class="mini-cart-toggle" onclick="toggleMiniCart()">
+    🛒
+    <span id="cartCount">0</span>
+  </div>
+
+  <div id="miniCart"></div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 data-translate="footer-about">About Us</h3>
+        <p data-translate="footer-about-text">Leading electronics trading platform since 2024.</p>
+      </div>
+      <div class="footer-section">
+        <h3 data-translate="footer-links">Quick Links</h3>
+        <ul>
+          <li><a href="catalog.html" data-translate="footer-catalog">Product Catalog</a></li>
+          <li><a href="shipping.html" data-translate="footer-shipping">Shipping Info</a></li>
+          <li><a href="contact.html" data-translate="footer-contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3 data-translate="footer-contact">Contact</h3>
+        <p>Email: info@techtradeglobal.com</p>
+        <p>Tel: +1 234 567 890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 TechTrade Global</p>
+    </div>
+  </footer>
+
+  <script>
+    // Catalog data
+    const productCatalog = {
+      smartphones: {
+        'Premium Smartphone': { minPrice: 800, maxPrice: 1200 },
+        'Tablet Pro': { minPrice: 500, maxPrice: 900 }
+      },
+      computers: {
+        'Business Laptop': { minPrice: 1000, maxPrice: 1500 },
+        'Desktop Computer': { minPrice: 1500, maxPrice: 2500 }
+      },
+      advertisement: {
+        'Professional Printer': { minPrice: 200, maxPrice: 350 },
+        'Smart Speakers': { minPrice: 150, maxPrice: 300 }
+      },
+      accessories: {
+        'Fast Chargers': { minPrice: 20, maxPrice: 40 },
+        'External Storage': { minPrice: 80, maxPrice: 200 }
+      }
+    };
+
+    // Language translations
+    const translations = {
+      en: {
+        "subtitle": "International Electronics Trading Platform",
+        "nav-inventory": "Inventory",
+        "nav-add": "Add Product",
+        "nav-payment": "Make Payment",
+        "nav-about": "About Us",
+        "nav-catalog": "Catalog",
+        "nav-contact": "Contact Us",
+        "nav-shipping": "Shipping & Returns",
+        "add-product": "Add New Product",
+        "product-category": "Product Category:",
+        "product-name": "Product:",
+        "transaction-type": "Transaction Type:",
+        "price-range": "Price Range:",
+        "price": "Price (USD):",
+        "quantity": "Quantity:",
+        "add-to-inventory": "Add to Inventory",
+        "logout": "Logout",
+        "footer-about": "About Us",
+        "footer-about-text": "Leading electronics trading platform since 2024.",
+        "footer-links": "Quick Links",
+        "footer-catalog": "Product Catalog",
+        "footer-shipping": "Shipping Info",
+        "footer-contact": "Contact Us"
+      },
+      es: {
+        "subtitle": "Plataforma Internacional de Comercio Electrónico",
+        "nav-inventory": "Inventario",
+        "nav-add": "Añadir Producto",
+        "nav-payment": "Realizar Pago",
+        "nav-about": "Sobre Nosotros",
+        "nav-catalog": "Catálogo",
+        "nav-contact": "Contáctenos",
+        "nav-shipping": "Envíos y Devoluciones",
+        "add-product": "Añadir Nuevo Producto",
+        "product-category": "Categoría de Producto:",
+        "product-name": "Producto:",
+        "transaction-type": "Tipo de Transacción:",
+        "price-range": "Rango de Precio:",
+        "price": "Precio (USD):",
+        "quantity": "Cantidad:",
+        "add-to-inventory": "Añadir al Inventario",
+        "logout": "Cerrar Sesión",
+        "footer-about": "Sobre Nosotros",
+        "footer-about-text": "Plataforma líder en comercio electrónico desde 2024.",
+        "footer-links": "Enlaces Rápidos",
+        "footer-catalog": "Catálogo de Productos",
+        "footer-shipping": "Información de Envío",
+        "footer-contact": "Contáctenos"
+      }
+    };
+
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      html.setAttribute('data-theme', newTheme);
+      themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Language change
+    function changeLanguage(lang) {
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang][key]) {
+          if (element.tagName === 'INPUT') {
+            element.placeholder = translations[lang][key];
+          } else {
+            element.textContent = translations[lang][key];
+          }
+        }
+      });
+      localStorage.setItem('language', lang);
+    }
+
+    // Handle category selection
+    document.getElementById('productCategory').addEventListener('change', function() {
+      const productSelect = document.getElementById('productName');
+      productSelect.disabled = false;
+      productSelect.innerHTML = '<option value="">Select Product</option>';
+      
+      if (this.value) {
+        const products = productCatalog[this.value];
+        for (const product in products) {
+          const option = document.createElement('option');
+          option.value = product;
+          option.textContent = product;
+          productSelect.appendChild(option);
+        }
+      } else {
+        productSelect.disabled = true;
+      }
+      
+      document.getElementById('priceRange').textContent = 'Select a product to see price range';
+      document.getElementById('price').value = '';
+    });
+
+    // Handle product selection
+    document.getElementById('productName').addEventListener('change', function() {
+      if (this.value) {
+        const category = document.getElementById('productCategory').value;
+        const product = productCatalog[category][this.value];
+        document.getElementById('priceRange').textContent = 
+          `$${product.minPrice} - $${product.maxPrice}`;
+        
+        document.getElementById('price').value = product.minPrice;
+        document.getElementById('price').min = product.minPrice;
+        document.getElementById('price').max = product.maxPrice;
+      } else {
+        document.getElementById('priceRange').textContent = 'Select a product to see price range';
+        document.getElementById('price').value = '';
+      }
+    });
+
+    // Form submission
+    document.getElementById('productForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const category = document.getElementById('productCategory').value;
+      const productName = document.getElementById('productName').value;
+      const price = parseFloat(document.getElementById('price').value);
+      const product = productCatalog[category][productName];
+
+      if (price < product.minPrice || price > product.maxPrice) {
+        alert(`Price must be between $${product.minPrice} and $${product.maxPrice}`);
+        return;
+      }
+
+      const newProduct = {
+        name: productName,
+        type: document.getElementById('productType').value,
+        price: price,
+        quantity: parseInt(document.getElementById('quantity').value)
+      };
+
+      let products = JSON.parse(localStorage.getItem('products')) || [];
+      products.push(newProduct);
+      localStorage.setItem('products', JSON.stringify(products));
+      
+      alert('Product added successfully!');
+      window.location.href = 'index.html';
+    });
+
+    // Update mini cart
+    function updateMiniCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const miniCart = document.getElementById('miniCart');
+      document.getElementById('cartCount').textContent = cart.length;
+
+      if (cart.length === 0) {
+        miniCart.innerHTML = '<p>Cart is empty</p>';
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      miniCart.innerHTML = `
+        ${cart.map(item => `
+          <div class="mini-cart-item">
+            <p>${item.name} x ${item.quantity}</p>
+            <p>$${(item.price * item.quantity).toLocaleString()}</p>
+          </div>
+        `).join('')}
+        <div class="mini-cart-total">
+          <strong>Total: $${total.toLocaleString()}</strong>
+        </div>
+      `;
+    }
+
+    // Toggle mini cart
+    function toggleMiniCart() {
+      const miniCart = document.getElementById('miniCart');
+      miniCart.style.display = miniCart.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check login status
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Set saved theme
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeIcon').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+
+      // Set saved language
+      const savedLanguage = localStorage.getItem('language') || 'en';
+      document.querySelector('.language-select').value = savedLanguage;
+      changeLanguage(savedLanguage);
+
+      // Display user name
+      document.getElementById('userName').textContent = `Welcome, ${currentUser.name}`;
+
+      // Initialize mini cart
+      updateMiniCart();
+    });
+
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
