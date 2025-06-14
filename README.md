@@ -55,3 +55,9 @@ Allows users to get in touch with the business for further communication or inqu
 Feel free to submit issues or suggestions via GitHub or through the contact page on the website.
 
 ---
+## 🎥 Website Walkthrough
+
+Click below to watch a video walkthrough of the website:
+https://github.com/user-attachments/assets/945a34e4-6d5c-4402-96a7-eb58d6f3627c
+
+🔗 [Watch Walkthrough Video](https://link-to-your-video.com)
